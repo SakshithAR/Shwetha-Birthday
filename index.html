@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Sis! 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --rose: #e8456a; --gold: #f5c842; --blush: #fce4ec;
+  --lavender: #9c6fce; --coral: #ff7b6b; --mint: #4dd0b3;
+  --deep: #1a0a2e; --soft: #fff0f6;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Poppins', sans-serif; background: var(--deep); color: #fff; overflow-x: hidden; min-height: 100vh; }
+
+/* STARS */
+#stars { position: fixed; top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0; }
+.star { position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;animation:twinkle 2s infinite alternate; }
+@keyframes twinkle { from{opacity:.2;transform:scale(.8)} to{opacity:1;transform:scale(1.3)} }
+
+/* CONFETTI */
+#confetti-container { position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999; }
+.confetti-piece { position:absolute;width:10px;height:10px;top:-20px;border-radius:2px;animation:fall linear infinite; }
+@keyframes fall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1} 100%{transform:translateY(110vh) rotate(720deg);opacity:0} }
+
+/* HERO */
+.hero { position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 1.5rem;z-index:1;background:radial-gradient(ellipse at 50% 0%,#3b1252 0%,var(--deep) 70%); }
+.hero-glow { position:absolute;width:clamp(300px, 100vw, 600px);height:clamp(300px, 100vw, 600px);border-radius:50%;background:radial-gradient(circle,rgba(232,69,106,.25) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:pulse-glow 3s ease-in-out infinite; }
+@keyframes pulse-glow { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7} 50%{transform:translate(-50%,-50%) scale(1.15);opacity:1} }
+.birthday-tag { font-family:'Poppins',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);background:rgba(245,200,66,.12);border:1px solid rgba(245,200,66,.35);padding:.45rem 1.4rem;border-radius:50px;margin-bottom:2rem;animation:fade-down .8s ease both; text-align: center;}
+.hero-title { font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.5rem,10vw,7rem);line-height:1.1;background:linear-gradient(135deg,#fff 0%,var(--gold) 40%,var(--rose) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fade-down .9s .1s ease both;margin-bottom:.4rem; }
+.hero-name { font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(2.2rem,8vw,5.5rem);color:var(--rose);text-shadow:0 0 40px rgba(232,69,106,.7);animation:fade-down 1s .2s ease both,float 4s ease-in-out 1.5s infinite;margin-bottom:1.5rem; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+.hero-msg { font-size:1.1rem;font-weight:300;color:rgba(255,255,255,.8);max-width:520px;line-height:1.8;animation:fade-down 1.1s .3s ease both;margin-bottom:2.5rem; }
+.hero-cake { font-size:5rem;animation:fade-down 1.2s .4s ease both,spin-rock 3s ease-in-out 2s infinite; }
+@keyframes spin-rock { 0%,100%{transform:rotate(-5deg) scale(1)} 50%{transform:rotate(5deg) scale(1.12)} }
+.scroll-hint { position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.4);font-size:.78rem;letter-spacing:.2em;animation:bounce 2s ease infinite; text-align: center; width: 100%;}
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+@keyframes fade-down { from{opacity:0;transform:translateY(-30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fade-up { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+
+/* SECTIONS */
+section { position:relative;z-index:1;padding:5rem 1.5rem; }
+.section-inner { max-width:960px;margin:0 auto; }
+.section-label { font-size:.78rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem; }
+.section-title { font-family:'Playfair Display',serif;font-size:clamp(2rem,7vw,3.2rem);font-weight:700;margin-bottom:1.2rem;color:#fff; line-height: 1.2; }
+
+/* GALLERY */
+.gallery-section { background:linear-gradient(180deg,var(--deep) 0%,#12051f 100%); }
+.gallery-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:2.5rem; }
+.photo-card { position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;background:linear-gradient(135deg,rgba(232,69,106,.25) 0%,rgba(156,111,206,.25) 100%);border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s; }
+.photo-card:hover { transform:scale(1.05) translateY(-6px);box-shadow:0 30px 60px rgba(232,69,106,.35); z-index: 10; }
+.photo-card img { width:100%;height:100%;object-fit:cover;transition:transform .5s ease; display: block; }
+.photo-card:hover img { transform:scale(1.08); }
+.photo-overlay { position:absolute;inset:0;background:linear-gradient(to top,rgba(26,10,46,.85) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;opacity:0;transition:opacity .3s; }
+.photo-card:hover .photo-overlay { opacity:1; }
+.photo-caption { font-family:'Dancing Script',cursive;font-size:1.3rem;color:#fff; line-height: 1.1; }
+.photo-sub { font-size:.75rem;color:var(--gold);margin-top:.2rem; }
+.photo-placeholder { width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;background:linear-gradient(135deg,#2c0e4a 0%,#1a0a3e 100%); }
+.photo-placeholder .emoji { font-size:3rem; }
+.photo-placeholder p { font-size:.85rem;color:rgba(255,255,255,.5);text-align:center;padding:0 1rem; }
+
+/* WISHES */
+.wishes-section { background:linear-gradient(180deg,#12051f 0%,#0d0320 100%); }
+.wishes-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;margin-top:2.5rem; }
+.wish-card { background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:2rem 1.6rem;transition:transform .3s,background .3s,border-color .3s;opacity:0;transform:translateY(30px); }
+.wish-card.visible { animation:fade-up .6s ease forwards; }
+.wish-card:hover { background:rgba(232,69,106,.08);border-color:rgba(232,69,106,.25);transform:translateY(-4px); }
+.wish-icon { font-size:2.2rem;margin-bottom:1rem; }
+.wish-title { font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--gold);margin-bottom:.7rem; }
+.wish-text { font-size:.9rem;color:rgba(255,255,255,.7);line-height:1.8; }
+
+/* LETTER */
+.letter-section { background:linear-gradient(180deg,#0d0320 0%,#1a0a2e 100%); }
+.letter-card { background:rgba(255,255,255,.04);border:1px solid rgba(245,200,66,.2);border-radius:28px;padding:3rem 2.5rem;max-width:680px;margin:2rem auto 0;position:relative;overflow:hidden; }
+.letter-card::before { content:'❝';position:absolute;top:-.3rem;left:1.8rem;font-size:6rem;color:rgba(232,69,106,.12);font-family:'Playfair Display',serif;line-height:1; }
+.letter-text { font-family:'Dancing Script',cursive;font-size:1.3rem;line-height:2;color:rgba(255,255,255,.88); position: relative; z-index: 2; }
+.letter-sign { margin-top:2rem;font-family:'Dancing Script',cursive;font-size:1.6rem;color:var(--rose);text-align:right; }
+
+/* COUNTDOWN */
+.countdown-section { background:linear-gradient(180deg,#1a0a2e 0%,#12051f 100%);text-align:center; }
+.countdown-grid { display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem; }
+.count-box { background:rgba(255,255,255,.05);border:1px solid rgba(232,69,106,.3);border-radius:18px;padding:1.5rem 2rem;min-width:110px;position:relative;overflow:hidden; }
+.count-box::after { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,69,106,.08) 0%,transparent 60%);pointer-events:none; }
+.count-num { font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--rose);display:block; }
+.count-label { font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:.2rem; }
+
+/* BALLOONS */
+.balloons { position:fixed;width:100%;height:100%;top:0;left:0;pointer-events:none;z-index:0; }
+.balloon { position:absolute;bottom:-120px;font-size:2.5rem;animation:rise linear infinite;opacity:.6; }
+@keyframes rise { 0%{transform:translateY(0) rotate(-5deg);opacity:.7} 50%{transform:translateY(-50vh) rotate(5deg);opacity:.5} 100%{transform:translateY(-110vh) rotate(-5deg);opacity:0} }
+
+/* HEARTS */
+.hearts { position:fixed;width:100%;height:100%;top:0;left:0;pointer-events:none;z-index:0; }
+.heart { position:absolute;font-size:1.2rem;animation:heart-float linear infinite;opacity:0; }
+@keyframes heart-float { 0%{opacity:0;transform:translateY(0) scale(.4)} 10%{opacity:.8} 90%{opacity:.3} 100%{opacity:0;transform:translateY(-80vh) scale(1)} }
+
+/* FOOTER */
+footer { text-align:center;padding:4rem 1.5rem 3rem;position:relative;z-index:1;background:#0a0218; }
+.footer-big { font-family:'Dancing Script',cursive;font-size:clamp(2rem,6vw,4rem);color:var(--gold);margin-bottom:.5rem; }
+
+/* REVEAL */
+.reveal { opacity:0;transform:translateY(30px); }
+.reveal.visible { animation:fade-up .7s ease forwards; }
+
+/* --- OPTIMIZED MOBILE RESPONSIVENESS --- */
+@media(max-width:600px){ 
+  section { padding: 4rem 1.2rem; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; } 
+  .letter-card { padding: 2.5rem 1.5rem; margin-top: 1.5rem; } 
+  .letter-card::before { left: 0.8rem; top: -0.5rem; font-size: 5rem; opacity: 0.08; }
+  .letter-text { font-size: 1.15rem; } 
+  .count-box { min-width: 85px; padding: 1.2rem 1rem; } 
+  .count-num { font-size: 2.2rem; } 
+  .photo-caption { font-size: 1.1rem; }
+  .photo-sub { font-size: 0.65rem; }
+  .photo-placeholder p { font-size: 0.75rem; padding: 0 0.5rem; }
+  .photo-placeholder .emoji { font-size: 2.2rem; }
+  .hero-msg { font-size: 1rem; }
+  .wishes-grid { grid-template-columns: 1fr; }
+}
+@media(max-width:380px){
+  /* Adjustments for extra small phones like iPhone SE */
+  .gallery-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .count-box { min-width: 75px; padding: 1rem 0.5rem; }
+  .count-num { font-size: 1.8rem; }
+  .count-label { font-size: 0.65rem; }
+  .hero-title { font-size: 2.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+<div class="balloons" id="balloons"></div>
+<div class="hearts" id="hearts"></div>
+<div id="confetti-container"></div>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="birthday-tag">✦ A Very Special Day ✦</div>
+  <h1 class="hero-title">Happy Birthday</h1>
+  <p class="hero-name">My Dearest Sister</p>
+  <p class="hero-msg">Today the whole universe celebrates the day you came into this world and made every single day brighter, warmer, and full of love. 🌸</p>
+  <div class="hero-cake">🎂</div>
+  <div class="scroll-hint">↓ scroll to celebrate ↓</div>
+</section>
+
+<section class="gallery-section">
+  <div class="section-inner">
+    <p class="section-label">📸 Memories</p>
+    <h2 class="section-title">Our Beautiful Moments</h2>
+    <p style="color:rgba(255,255,255,.55);font-size:.9rem;max-width:500px">Every photo tells a story — yours is a story of joy, laughter, and love. <em style="color:var(--gold)">Add your own photos below!</em></p>
+    
+    <div class="gallery-grid">
+      
+      <div class="photo-card reveal">
+      
+             <img src="https://drive.google.com/thumbnail?id=1x5UTSvDLJE9GPwp_NvGBPHFjM0ipsdaN&sz=w1000" alt="Favourite photo of her" />
+        <div class="photo-overlay">
+          <span class="photo-caption">Always Glowing</span>
+          <span class="photo-sub">📍 Kokkada,Home</span>
+        </div>
+      </div>
+
+      <div class="photo-card reveal">
+        <img src="https://drive.google.com/thumbnail?id=1bHM-ho88RZrRm7A6NQffHjgk23WnJ2vd&sz=w1000" alt="Favourite photo of her" />
+        <div class="photo-overlay">
+          <span class="photo-caption">A silly or candid photo</span>
+          <span class="photo-sub">📍Kokkada,Home</span>
+        </div>
+      </div>
+      
+ <div class="photo-card reveal">
+        <img src="https://drive.google.com/thumbnail?id=1tUb-oSE_dWmQTag921-yueDNE-Vq_275&sz=w1000" alt="Favourite photo of her" />
+        <div class="photo-overlay">
+          <span class="photo-caption">A fun memory you both share</span>
+          <span class="photo-sub">📍 A happy Manglore</span>
+        </div>
+      </div>
+
+      <div class="photo-card reveal">
+         <img src="https://drive.google.com/thumbnail?id=1NMVAnIaWawBDniMweO2Q42mUehYa2y2m&sz=w1000" alt="Favourite photo of her" />
+        <div class="photo-overlay">
+          <span class="photo-caption">A photo that makes you smile</span>
+          <span class="photo-sub">📍Kokkada,Home</span>
+        </div>
+      </div>
+
+       <div class="photo-card reveal">
+        <img src="https://drive.google.com/thumbnail?id=1SRS6qYVMn0gXq1oXrLZk56TO8hIP6P_R&sz=w1000" alt="Favourite photo of her" />
+        <div class="photo-overlay">
+          <span class="photo-caption">Your most magical moment</span>
+          <span class="photo-sub">📍 A happy Temple,Subramanya</span>
+        </div>
+      </div>
+
+      <div class="photo-card reveal">
+        <img src="https://drive.google.com/thumbnail?id=1FvZknLfeLnswhdJkq9Yz5yJ9wuV19Lq3&sz=w1000" alt="Favourite photo of her" />
+        <div class="photo-overlay">
+          <span class="photo-caption">Your most magical moment</span>
+          <span class="photo-sub">📍 A happy place</span>
+        </div>
+      </div>
+
+     
+ <!--  
+      <div class="photo-card reveal">
+        <div class="photo-placeholder"><span class="emoji">🎉</span><p>A fun memory you both share</p></div>
+        <div class="photo-overlay"><span class="photo-caption">Best Times Ever</span><span class="photo-sub">📍 Together</span></div>
+      </div>
+      <div class="photo-card reveal">
+        <div class="photo-placeholder"><span class="emoji">💖</span><p>A photo that makes you smile</p></div>
+        <div class="photo-overlay"><span class="photo-caption">Pure Joy</span><span class="photo-sub">📍 Captured forever</span></div>
+      </div>
+      <div class="photo-card reveal">
+        <div class="photo-placeholder"><span class="emoji">✨</span><p>Your most magical moment</p></div>
+        <div class="photo-overlay"><span class="photo-caption">Shining Bright</span><span class="photo-sub">📍 Always</span></div>
+      </div>
+      <div class="photo-card reveal">
+        <div class="photo-placeholder"><span class="emoji">🌺</span><p>A travel or adventure memory</p></div>
+        <div class="photo-overlay"><span class="photo-caption">Adventures Await</span><span class="photo-sub">📍 Everywhere</span></div>
+      </div>
+      <div class="photo-card reveal">
+        <div class="photo-placeholder"><span class="emoji">🎵</span><p>A silly or candid photo</p></div>
+        <div class="photo-overlay"><span class="photo-caption">Laughter & Love</span><span class="photo-sub">📍 Every day</span></div>
+      </div>   -->
+    </div>
+  </div>
+</section>
+
+<section class="wishes-section">
+  <div class="section-inner">
+    <p class="section-label">🎁 Birthday Wishes</p>
+    <h2 class="section-title">Everything I Wish For You</h2>
+    <div class="wishes-grid">
+      <div class="wish-card reveal"><div class="wish-icon">🌟</div><h3 class="wish-title">Endless Happiness</h3><p class="wish-text">May every morning greet you with a smile and every night bring you peace. May your heart always be full of joy that never fades.</p></div>
+      <div class="wish-card reveal"><div class="wish-icon">💫</div><h3 class="wish-title">All Your Dreams</h3><p class="wish-text">Every dream you've been quietly holding — may this year be the year they begin to come true, one beautiful step at a time.</p></div>
+      <div class="wish-card reveal"><div class="wish-icon">🌹</div><h3 class="wish-title">Love All Around</h3><p class="wish-text">May you always be surrounded by people who love you deeply, cherish you fully, and never let you feel alone.</p></div>
+      <div class="wish-card reveal"><div class="wish-icon">🦋</div><h3 class="wish-title">Confidence & Courage</h3><p class="wish-text">You are stronger than you know and more beautiful than you see. May this year show you exactly how extraordinary you are.</p></div>
+      <div class="wish-card reveal"><div class="wish-icon">🍀</div><h3 class="wish-title">Good Health Always</h3><p class="wish-text">May your body be strong, your mind be calm, and your spirit be bright. Good health is the greatest gift — may it always be yours.</p></div>
+      <div class="wish-card reveal"><div class="wish-icon">🌈</div><h3 class="wish-title">Adventures Ahead</h3><p class="wish-text">May life take you to places that take your breath away, give you stories worth telling, and memories worth keeping forever.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="letter-section">
+  <div class="section-inner">
+    <p class="section-label" style="text-align:center">💌 From the Heart</p>
+    <h2 class="section-title" style="text-align:center">A Letter Just for You</h2>
+    <div class="letter-card reveal">
+      <p class="letter-text">
+        Dear Sister,<br><br>
+        There aren't enough words in the world to tell you how much you mean to me. You are not just my sister — you are my home, my favourite person, my forever friend.<br><br>
+        Watching you grow, laugh, love, and shine has been the greatest privilege of my life. You make everything better simply by being you.<br><br>
+        On this very special day, I want you to know: I am endlessly proud of who you are, I am grateful every single day that you are mine, and I love you more than the stars in the sky and back again.<br><br>
+        Happy Birthday, beautiful. Today is all yours. 🌸
+      </p>
+      <p class="letter-sign">With all my love, forever 💖</p>
+    </div>
+  </div>
+</section>
+
+<section class="countdown-section">
+  <div class="section-inner">
+    <p class="section-label">⏳ Right Now</p>
+    <h2 class="section-title">Celebrating Since Midnight</h2>
+    <div class="countdown-grid">
+      <div class="count-box"><span class="count-num" id="c-hours">00</span><span class="count-label">Hours</span></div>
+      <div class="count-box"><span class="count-num" id="c-mins">00</span><span class="count-label">Minutes</span></div>
+      <div class="count-box"><span class="count-num" id="c-secs">00</span><span class="count-label">Seconds</span></div>
+    </div>
+    <p style="margin-top:2rem;color:var(--gold);font-family:'Dancing Script',cursive;font-size:1.6rem" class="reveal">Every second is worth celebrating! 🥂</p>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-big">Happy Birthday Sis! 🎂✨</p>
+  <p style="font-family:'Dancing Script',cursive;font-size:1.3rem;color:rgba(255,255,255,.55);margin-bottom:.5rem">Made with all the love in the world, just for you.</p>
+  <div style="font-size:2rem;margin:1rem 0">🎉🌸💖🎊✨🍰💫</div>
+  <p style="font-size:.85rem;color:rgba(255,255,255,.3)">This page was made especially for the most wonderful sister ever 💕</p>
+</footer>
+
+<script>
+/* STARS */
+(function(){
+  const s=document.getElementById('stars');
+  for(let i=0;i<120;i++){
+    const d=document.createElement('div');
+    d.className='star';
+    d.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;animation-delay:'+Math.random()*3+'s;animation-duration:'+(1.5+Math.random()*2)+'s;width:'+(1+Math.random()*3)+'px;height:'+(1+Math.random()*3)+'px;opacity:'+(0.3+Math.random()*0.7);
+    s.appendChild(d);
+  }
+})();
+
+/* BALLOONS */
+(function(){
+  const b=document.getElementById('balloons');
+  const emojis=['🎈','🎀','🎊','🌸','💖','⭐','🌙'];
+  for(let i=0;i<18;i++){
+    const d=document.createElement('div');
+    d.className='balloon';
+    d.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    d.style.cssText='left:'+Math.random()*100+'%;animation-duration:'+(8+Math.random()*12)+'s;animation-delay:'+Math.random()*10+'s;font-size:'+(1.5+Math.random()*2)+'rem;';
+    b.appendChild(d);
+  }
+})();
+
+/* HEARTS */
+(function(){
+  const h=document.getElementById('hearts');
+  const make=()=>{
+    const d=document.createElement('div');
+    d.className='heart';
+    d.textContent=['💖','💗','💕','❤️','💝'][Math.floor(Math.random()*5)];
+    d.style.cssText='left:'+Math.random()*100+'%;bottom:'+Math.random()*20+'%;animation-duration:'+(5+Math.random()*8)+'s;animation-delay:'+Math.random()*5+'s;font-size:'+(0.8+Math.random()*1.5)+'rem;';
+    h.appendChild(d);
+    setTimeout(()=>d.remove(),13000);
+  };
+  for(let i=0;i<12;i++) setTimeout(make,i*800);
+  setInterval(make,900);
+})();
+
+/* CONFETTI */
+(function(){
+  const c=document.getElementById('confetti-container');
+  const colors=['#e8456a','#f5c842','#9c6fce','#ff7b6b','#4dd0b3','#fff','#ff9ff3'];
+  let active=true;
+  const make=()=>{
+    if(!active)return;
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    const color=colors[Math.floor(Math.random()*colors.length)];
+    const size=6+Math.random()*10;
+    const circle=Math.random()>.5;
+    p.style.cssText='left:'+Math.random()*100+'%;width:'+(circle?size:size/2)+'px;height:'+size+'px;background:'+color+';border-radius:'+(circle?'50%':'2px')+';animation-duration:'+(3+Math.random()*4)+'s;animation-delay:'+Math.random()*2+'s;';
+    c.appendChild(p);
+    setTimeout(()=>p.remove(),7000);
+  };
+  for(let i=0;i<60;i++) setTimeout(make,i*80);
+  const iv=setInterval(()=>{for(let i=0;i<3;i++)make();},350);
+  setTimeout(()=>{ clearInterval(iv); active=false; setInterval(()=>{for(let i=0;i<8;i++){active=true;make();active=false;}},6000); },20000);
+})();
+
+/* SCROLL REVEAL */
+(function(){
+  const items=document.querySelectorAll('.reveal');
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el=e.target;
+        const siblings=Array.from(el.parentNode.children);
+        el.style.animationDelay=(siblings.indexOf(el)*0.1)+'s';
+        el.classList.add('visible');
+        obs.unobserve(el);
+      }
+    });
+  },{threshold:0.12});
+  items.forEach(i=>obs.observe(i));
+})();
+
+/* TIMER */
+(function(){
+  const start=new Date(); start.setHours(0,0,0,0);
+  const pad=n=>String(n).padStart(2,'0');
+  const tick=()=>{
+    const diff=Date.now()-start;
+    document.getElementById('c-hours').textContent=pad(Math.floor(diff/3600000));
+    document.getElementById('c-mins').textContent=pad(Math.floor((diff%3600000)/60000));
+    document.getElementById('c-secs').textContent=pad(Math.floor((diff%60000)/1000));
+  };
+  tick(); setInterval(tick,1000);
+})();
+
+/* PHOTO CLICK BURST */
+document.querySelectorAll('.photo-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const c=document.getElementById('confetti-container');
+    const emojis=['🎉','💖','🌸','✨','🎊','🌟'];
+    const rect=card.getBoundingClientRect();
+    for(let i=0;i<15;i++){
+      const p=document.createElement('div');
+      p.style.cssText='position:absolute;top:'+(rect.top+window.scrollY)+'px;left:'+(rect.left+Math.random()*rect.width)+'px;font-size:'+(1+Math.random())+'rem;pointer-events:none;animation:fall '+(1+Math.random()*2)+'s linear forwards;z-index:9999;';
+      p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      c.appendChild(p);
+      setTimeout(()=>p.remove(),3000);
+    }
+  });
+});
+</script>
+</body>
+</html>
